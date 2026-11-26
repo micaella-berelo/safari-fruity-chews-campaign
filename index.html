@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Safari Fruity Chews | Campaign Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&display=swap">
+<style>
+:root{--ink:#0E0E1A;--purple:#6B4C9A;--deep:#4E3177;--green:#0F8A3D;--grey:#6B6B78;--panel:#F7F7F7;--rule:#E4E1EA;--pale:#E5DCF5;--bright:#22E05A;--lav:#C9BEDD;
+--f-black:"Roc Grotesk Black","Archivo",system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+--f-xb:"Roc Grotesk ExtraBold","Archivo",system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+--f-cond:"Roc Grotesk Condensed ExtraBold","Archivo","Arial Narrow",system-ui,sans-serif;
+--f-body:"Roc Grotesk Medium","Archivo",system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
+.band{background:var(--ink) url(assets/header-bg.png) center/cover;color:#fff;padding:32px max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px));position:relative;overflow:hidden}
+.band:after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:var(--bright)}
+.band:before{content:"";position:absolute;right:90px;top:120px;width:130px;height:130px;border-radius:50%;background:var(--purple)}
+.wrap{max-width:1080px;margin:0 auto;position:relative;z-index:1}
+.logo{height:42px;width:auto;display:block;margin-bottom:26px}
+.eyebrow{font-family:var(--f-cond);font-stretch:85%;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--bright);font-weight:800}
+.eyebrow.p{color:var(--purple)}
+h1{font-family:var(--f-black);font-weight:900;font-size:clamp(28px,5vw,40px);margin:6px 0 4px;line-height:1.1}
+.sub{color:var(--lav);margin:0 0 26px}
+.tabs{display:flex;gap:4px;flex-wrap:wrap}
+.tab{background:transparent;border:0;color:var(--lav);font:inherit;font-weight:700;padding:12px 20px;border-radius:10px 10px 0 0;cursor:pointer}
+.tab[aria-selected=true]{background:#fff;color:var(--deep)}
+.tab:focus-visible,summary:focus-visible{outline:2px solid var(--bright);outline-offset:2px}
+main{max-width:1080px;margin:0 auto;padding:30px max(16px,env(safe-area-inset-right,0px)) 8px max(16px,env(safe-area-inset-left,0px))}
+.view[hidden]{display:none}
+section{margin:0 0 38px}
+h2{font-family:var(--f-xb);font-weight:800;font-size:20px;margin:4px 0 14px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
+.tile{background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:18px;min-width:0}
+.tile .v{font-family:var(--f-black);font-weight:900;font-size:30px;line-height:1.1;color:var(--deep);font-variant-numeric:tabular-nums}
+.tile .l{color:var(--grey);font-size:13px;margin-top:4px}
+.tile .d{font-size:12px;color:var(--green);margin-top:8px;font-weight:700}
+.panel{background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:20px 22px;min-width:0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:14px}
+.panel h3{margin:0 0 2px;font-size:16px;font-family:var(--f-xb);font-weight:800}
+.cap{margin:0 0 12px;color:var(--grey);font-size:13px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--grey);margin:0 0 6px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+svg{width:100%;height:auto;display:block}
+table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:10px 12px;text-align:right;border-bottom:1px solid var(--rule);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--grey);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+thead tr.grp th{color:var(--deep);border-bottom:0;padding-bottom:0}
+.scroll{overflow-x:auto}
+.summary{border-left:5px solid var(--green)}
+.summary h3{color:var(--deep);font-size:17px;margin-bottom:8px}
+.summary ul{margin:0 0 12px;padding-left:20px}
+.summary li{margin:4px 0}
+.summary .since{margin:0;padding-top:12px;border-top:1px solid var(--rule)}
+details{margin-top:12px}
+summary{cursor:pointer;color:var(--purple);font-weight:700}
+details .panel{margin-top:12px}
+.bar{display:flex;align-items:center;gap:10px;margin:9px 0;font-size:14px}
+.bar .lab{flex:0 0 42%;min-width:0}
+.bar .track{flex:1;background:var(--pale);border-radius:6px;height:14px;overflow:hidden}
+.bar .fill{display:block;height:100%;background:var(--purple);border-radius:6px}
+.bar .n{flex:0 0 96px;text-align:right;color:var(--grey);font-size:13px;font-variant-numeric:tabular-nums}
+.bar.top .fill{background:var(--green)}
+.qnote{font-size:12px;color:var(--grey);font-style:italic;margin:10px 0 0}
+footer{max-width:1080px;margin:0 auto;padding:18px max(16px,env(safe-area-inset-right,0px)) 30px max(16px,env(safe-area-inset-left,0px));color:var(--grey);font-size:12px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+@media(max-width:600px){.bar .lab{flex-basis:38%}.bar .n{flex-basis:84px}.band:before{display:none}.band:after{width:130px;height:130px;right:-65px;top:-65px}}
+</style></head><body>
+<header class="band"><div class="wrap">
+<img class="logo" src="assets/berelo-logo.png" alt="Berelo">
+<div class="eyebrow">Campaign dashboard</div>
+<h1 id="title"></h1>
+<p class="sub" id="upd"></p>
+<div class="tabs" role="tablist">
+<button class="tab" role="tab" aria-selected="true" data-v="perf">Performance</button>
+<button class="tab" role="tab" aria-selected="false" data-v="survey">Survey</button>
+</div>
+</div></header>
+<main>
+<div class="view" id="perf">
+<section><div class="eyebrow p">Latest numbers</div><h2>Where we are today</h2><div class="tiles" id="tiles"></div></section>
+<section><div class="eyebrow p">Latest report</div><h2>Summary</h2><div id="summary"></div></section>
+<section><div class="eyebrow p">Over time</div><h2>How it has moved</h2><div class="grid2" id="charts"></div></section>
+<section><div class="eyebrow p">By retailer</div><h2>Every report</h2><div class="panel scroll"><table id="tbl"></table></div></section>
+</div>
+<div class="view" id="survey" hidden>
+<section><div class="eyebrow p">Survey</div><h2>What shoppers told us</h2><p class="cap" id="sasof"></p><div class="tiles" id="stiles"></div></section>
+<section><div class="eyebrow p">Every question</div><h2>Answers by question</h2><div class="grid2" id="sq"></div></section>
+<section><div class="eyebrow p">Responses</div><h2>Surveys completed each day</h2><div class="panel" id="joins"></div></section>
+</div>
+</main>
+<footer><span id="foot"></span><span>Aggregate numbers only</span></footer>
+<script src="data.js"></script>
+<script>
+const D=window.DASHBOARD_DATA,H=D.history;
+const f=n=>Math.round(n).toLocaleString("en-US");
+const p1=v=>v.toFixed(1)+"%";
+const pct=(a,b)=>b?(a/b*100):0;
+const C={chk:"#4E3177",pnp:"#0F8A3D"};
+const rows=H.map(r=>{const ti=r.checkers.issued+r.pnp.issued,tr=r.checkers.redeemed+r.pnp.redeemed;
+ return {date:r.date,ci:r.checkers.issued,cr:r.checkers.redeemed,pi:r.pnp.issued,pr:r.pnp.redeemed,ti,tr,
+  crr:pct(r.checkers.redeemed,r.checkers.issued),prr:pct(r.pnp.redeemed,r.pnp.issued),trr:pct(tr,ti)}});
+const L=rows[rows.length-1],P=rows[rows.length-2];
+const $=id=>document.getElementById(id);
+$("title").textContent=D.campaign;
+$("upd").textContent="Last updated "+D.lastUpdated;
+$("foot").textContent="Berelo | "+D.campaign+" | Confidential";
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
+ document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x===b));
+ document.querySelectorAll(".view").forEach(v=>v.hidden=v.id!==b.dataset.v)});
+const ch=(a,b)=>(a-b>=0?"+":"")+f(a-b)+" since "+P.date;
+const chp=(a,b)=>(a-b>=0?"+":"")+(a-b).toFixed(1)+" pts since "+P.date;
+$("tiles").innerHTML=[
+ ["Coupons issued",f(L.ti),"Checkers and Pick n Pay"],
+ ["Coupons redeemed",f(L.tr),ch(L.tr,P.tr)],
+ ["Redemption rate",p1(L.trr),"of issued coupons redeemed"],
+ ["Pick n Pay rate",p1(L.prr),f(L.pr)+" of "+f(L.pi)+" redeemed"],
+ ["Checkers rate",p1(L.crr),f(L.cr)+" of "+f(L.ci)+" redeemed"]
+].map(t=>`<div class="tile"><div class="v">${t[1]}</div><div class="l">${t[0]}</div><div class="d">${t[2]}</div></div>`).join("");
+const sumHTML=s=>`<div class="panel summary"><h3>${s.heading}</h3><ul>${s.points.map(p=>`<li>${p}</li>`).join("")}</ul><p class="since">${s.since}</p></div>`;
+const S=D.summaries||[];
+$("summary").innerHTML=S.length?`<div class="eyebrow p" style="margin-bottom:8px">${S[0].date}</div>`+sumHTML(S[0])+(S.length>1?`<details><summary>Earlier reports</summary>${S.slice(1).map(s=>`<div class="eyebrow p" style="margin-top:14px">${s.date}</div>`+sumHTML(s)).join("")}</details>`:""):"";
+function lines(series,fmt,title,cap){
+ const w=480,h=240,pl=52,pr=20,pt=28,pb=32,all=series.flatMap(s=>rows.map(r=>r[s.key]));
+ let mn=Math.min(...all),mx=Math.max(...all);const pad=(mx-mn)*.15||mx*.1;mn=Math.max(0,mn-pad);mx+=pad;
+ const x=i=>pl+(rows.length>1?i*(w-pl-pr)/(rows.length-1):(w-pl-pr)/2);
+ const y=v=>pt+(h-pt-pb)*(1-(v-mn)/(mx-mn));
+ let s=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${title}">`;
+ for(let k=0;k<4;k++){const v=mn+(mx-mn)*k/3,yy=y(v);s+=`<line x1="${pl}" x2="${w-pr}" y1="${yy}" y2="${yy}" stroke="#E4E1EA"/><text x="${pl-8}" y="${yy+4}" font-size="12" fill="#6B6B78" text-anchor="end">${fmt(v)}</text>`}
+ rows.forEach((r,i)=>{s+=`<text x="${x(i)}" y="${h-8}" font-size="12" fill="#6B6B78" text-anchor="middle">${r.date}</text>`});
+ series.forEach((se,si)=>{
+  s+=`<polyline fill="none" stroke="${se.color}" stroke-width="3" stroke-linejoin="round" points="${rows.map((r,i)=>x(i)+","+y(r[se.key])).join(" ")}"/>`;
+  rows.forEach((r,i)=>{s+=`<circle cx="${x(i)}" cy="${y(r[se.key])}" r="4.5" fill="${se.color}"><title>${se.name}, ${r.date}: ${fmt(r[se.key])}</title></circle>`});
+  const li=rows.length-1;s+=`<text x="${x(li)-8}" y="${y(rows[li][se.key])+(si===0?-10:18)}" font-size="12" font-weight="700" fill="#0E0E1A" text-anchor="end">${fmt(rows[li][se.key])}</text>`});
+ const leg=series.length>1?`<div class="legend">${series.map(se=>`<span><i style="background:${se.color}"></i>${se.name}</span>`).join("")}</div>`:"";
+ return `<div class="panel"><h3>${title}</h3><p class="cap">${cap}</p>${leg}${s}</svg></div>`}
+$("charts").innerHTML=
+ lines([{key:"prr",name:"Pick n Pay",color:C.pnp},{key:"crr",name:"Checkers",color:C.chk}],p1,"Redemption rate by retailer","Redeemed as a share of issued coupons")+
+ lines([{key:"trr",name:"Combined",color:"#6B4C9A"}],p1,"Combined redemption rate","Both retailers together")+
+ lines([{key:"pr",name:"Pick n Pay",color:C.pnp},{key:"cr",name:"Checkers",color:C.chk}],f,"Coupons redeemed","Coupons used in store, to date")+
+ lines([{key:"pi",name:"Pick n Pay",color:C.pnp},{key:"ci",name:"Checkers",color:C.chk}],f,"Coupons issued","Shoppers who received a coupon, to date");
+$("tbl").innerHTML=`<thead><tr class="grp"><th></th><th colspan="3">Checkers</th><th colspan="3">Pick n Pay</th><th colspan="3">Combined</th></tr>
+<tr><th>Report</th><th>Issued</th><th>Redeemed</th><th>Rate</th><th>Issued</th><th>Redeemed</th><th>Rate</th><th>Issued</th><th>Redeemed</th><th>Rate</th></tr></thead><tbody>`+
+ rows.slice().reverse().map(r=>`<tr><td>${r.date}</td><td>${f(r.ci)}</td><td>${f(r.cr)}</td><td>${p1(r.crr)}</td><td>${f(r.pi)}</td><td>${f(r.pr)}</td><td>${p1(r.prr)}</td><td>${f(r.ti)}</td><td>${f(r.tr)}</td><td>${p1(r.trr)}</td></tr>`).join("")+"</tbody>";
+// Survey tab
+const Q=D.survey||[];
+const tot=q=>q.answers.reduce((s,x)=>s+x.count,0);
+const shareOf=(q,labels)=>{const t=tot(q),c=q.answers.filter(a=>labels.includes(a.label)).reduce((s,a)=>s+a.count,0);return t?p1(c/t*100):"-"};
+const byStart=s=>Q.find(q=>q.question.startsWith(s));
+$("sasof").textContent=`From the survey report of ${D.surveyAsOf}. ${f(D.surveyResponses)} shoppers have completed the survey.`;
+$("stiles").innerHTML=[
+ [f(D.surveyResponses),"Survey responses","completed to date"],
+ [shareOf(byStart("Did you enjoy"),["Yes","Great","Good"]),"Enjoyed the taste","answered Yes, Great or Good"],
+ [shareOf(byStart("Would you buy"),["Definitely"]),"Will definitely buy again","Safari Fruity Chews"],
+ [shareOf(byStart("How would you rate"),["Great value","Fair price"]),"Say the price is right","great value or fair price"],
+ [shareOf(byStart("What nutrition"),["Real, natural ingredients"]),"Want natural ingredients","the top nutrition answer"]
+].map(t=>`<div class="tile"><div class="v">${t[0]}</div><div class="l">${t[1]}</div><div class="d">${t[2]}</div></div>`).join("");
+$("sq").innerHTML=Q.map(q=>{const t=tot(q),m=Math.max(...q.answers.map(a=>a.count));
+ return `<div class="panel"><h3>${q.question}</h3><p class="cap">${f(t)} answers</p>${q.answers.map((a,i)=>`<div class="bar${i===0?" top":""}"><span class="lab">${a.label}</span><span class="track"><span class="fill" style="width:${a.count/m*100}%"></span></span><span class="n">${f(a.count)} (${a.count/t<.005?"<1":Math.round(a.count/t*100)}%)</span></div>`).join("")}${q.note?`<p class="qnote">${q.note}</p>`:""}</div>`}).join("");
+(function(){const J=D.joins||[];if(!J.length)return;
+ const w=960,h=240,pl=44,pr=10,pt=16,pb=40,mx=Math.max(...J.map(j=>j.count)),bw=(w-pl-pr)/J.length;
+ let s=`<p class="cap">Surveys completed per day. The spikes line up with campaign pushes such as reminder SMSs.</p><svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Surveys completed each day">`;
+ [0,.5,1].forEach(k=>{const yy=pt+(h-pt-pb)*(1-k);s+=`<line x1="${pl}" x2="${w-pr}" y1="${yy}" y2="${yy}" stroke="#E4E1EA"/><text x="${pl-6}" y="${yy+4}" font-size="12" fill="#6B6B78" text-anchor="end">${f(mx*k)}</text>`});
+ J.forEach((j,i)=>{const bh=(h-pt-pb)*j.count/mx,xx=pl+i*bw;s+=`<rect x="${xx+1}" y="${h-pb-bh}" width="${Math.max(1,bw-2)}" height="${bh}" rx="2" fill="#6B4C9A"><title>${j.date}: ${f(j.count)}</title></rect>`;
+  if(i%7===0)s+=`<text x="${xx+bw/2}" y="${h-pb+18}" font-size="11" fill="#6B6B78" text-anchor="middle">${j.date}</text>`});
+ $("joins").innerHTML=s+"</svg>"})();
+</script></body></html>
